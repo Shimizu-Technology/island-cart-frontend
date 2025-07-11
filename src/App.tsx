@@ -21,58 +21,60 @@ function App() {
         <Router>
           <div className="min-h-screen bg-gray-50">
             <Navbar />
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              
-              {/* Customer Routes */}
-              <Route path="/" element={
-                <ProtectedRoute role="customer">
-                  <CatalogPage />
-                </ProtectedRoute>
-              } />
-              <Route path="/cart" element={
-                <ProtectedRoute role="customer">
-                  <CartPage />
-                </ProtectedRoute>
-              } />
-              <Route path="/checkout" element={
-                <ProtectedRoute role="customer">
-                  <CheckoutPage />
-                </ProtectedRoute>
-              } />
-              <Route path="/orders/:orderId" element={
-                <ProtectedRoute role="customer">
-                  <OrderTrackingPage />
-                </ProtectedRoute>
-              } />
-              
-              {/* Driver Routes */}
-              <Route path="/driver" element={
-                <ProtectedRoute role="driver">
-                  <DriverDashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/driver/orders/:orderId" element={
-                <ProtectedRoute role="driver">
-                  <OrderDetailsPage />
-                </ProtectedRoute>
-              } />
-              <Route path="/driver/orders/:orderId/shopping" element={
-                <ProtectedRoute role="driver">
-                  <OrderShoppingPage />
-                </ProtectedRoute>
-              } />
-              
-              {/* Admin Routes */}
-              <Route path="/admin" element={
-                <ProtectedRoute role="admin">
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } />
-              
-              {/* Fallback */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            <main className="pt-16">
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                
+                {/* Customer Routes */}
+                <Route path="/" element={
+                  <ProtectedRoute role="customer">
+                    <CatalogPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/cart" element={
+                  <ProtectedRoute role="customer">
+                    <CartPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/checkout" element={
+                  <ProtectedRoute role="customer">
+                    <CheckoutPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/orders/:orderId" element={
+                  <ProtectedRoute role="customer">
+                    <OrderTrackingPage />
+                  </ProtectedRoute>
+                } />
+                
+                {/* Driver Routes */}
+                <Route path="/driver" element={
+                  <ProtectedRoute role="driver">
+                    <DriverDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/driver/orders/:orderId" element={
+                  <ProtectedRoute role="driver">
+                    <OrderDetailsPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/driver/orders/:orderId/shopping" element={
+                  <ProtectedRoute role="driver">
+                    <OrderShoppingPage />
+                  </ProtectedRoute>
+                } />
+                
+                {/* Admin Routes */}
+                <Route path="/admin" element={
+                  <ProtectedRoute role="admin">
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } />
+                
+                {/* Fallback */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
           </div>
         </Router>
       </CartProvider>
