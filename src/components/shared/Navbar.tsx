@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Package, Settings, LogOut, Menu, X } from 'lucide-react';
+import { ShoppingCart, Package, Settings, LogOut, Menu, X, Home } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 
@@ -16,7 +16,8 @@ export const Navbar: React.FC = () => {
     switch (user.role) {
       case 'customer':
         return [
-          { to: '/', label: 'Catalog', icon: Package },
+          { to: '/', label: 'Home', icon: Home },
+          { to: '/catalog', label: 'Catalog', icon: Package },
           { to: '/cart', label: 'Cart', icon: ShoppingCart, badge: itemCount > 0 ? itemCount : undefined },
         ];
       case 'driver':

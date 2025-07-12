@@ -5,6 +5,23 @@ export interface User {
   name: string;
 }
 
+export interface NutritionFacts {
+  servingSize: string;
+  calories: number;
+  totalFat: string;
+  saturatedFat: string;
+  transFat: string;
+  cholesterol: string;
+  sodium: string;
+  totalCarbohydrates: string;
+  dietaryFiber: string;
+  sugars: string;
+  protein: string;
+  vitaminC?: string;
+  calcium?: string;
+  iron?: string;
+}
+
 export interface Item {
   id: string;
   name: string;
@@ -13,6 +30,16 @@ export interface Item {
   category: string;
   description?: string;
   inStock: boolean;
+  brand?: string;
+  origin?: string;
+  weight?: string;
+  ingredients?: string[];
+  allergens?: string[];
+  nutritionFacts?: NutritionFacts;
+  storageInstructions?: string;
+  shelfLife?: string;
+  benefits?: string[];
+  certifications?: string[];
 }
 
 export interface CartItem {

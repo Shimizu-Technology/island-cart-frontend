@@ -5,6 +5,7 @@ import { CartProvider } from './context/CartContext';
 import { ProtectedRoute } from './components/shared/ProtectedRoute';
 import { Navbar } from './components/shared/Navbar';
 import { LoginPage } from './pages/LoginPage';
+import { CustomerHome } from './pages/customer/CustomerHome';
 import { CatalogPage } from './pages/customer/CatalogPage';
 import { CartPage } from './pages/customer/CartPage';
 import { CheckoutPage } from './pages/customer/CheckoutPage';
@@ -27,6 +28,11 @@ function App() {
                 
                 {/* Customer Routes */}
                 <Route path="/" element={
+                  <ProtectedRoute role="customer">
+                    <CustomerHome />
+                  </ProtectedRoute>
+                } />
+                <Route path="/catalog" element={
                   <ProtectedRoute role="customer">
                     <CatalogPage />
                   </ProtectedRoute>
