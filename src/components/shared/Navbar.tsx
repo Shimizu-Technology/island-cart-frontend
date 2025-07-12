@@ -40,8 +40,11 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16">
           <div className="flex items-center">
-            <Link to="/" className="text-lg sm:text-xl font-bold text-ocean-teal-600">
-              Island Cart
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
+                <span className="text-xl sm:text-2xl font-bold text-ocean-teal-700">Guahan</span>
+                <span className="text-xl sm:text-2xl font-bold" style={{ color: '#E67E52' }}>Grocer</span>
+              </div>
             </Link>
           </div>
           

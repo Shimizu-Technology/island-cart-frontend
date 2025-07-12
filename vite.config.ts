@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Island Cart',
-        short_name: 'IslandCart',
-        description: 'Grocery delivery for Guam',
+        name: 'Guahan Grocer',
+                  short_name: 'GuahanGrocer',
+          description: 'Grocery delivery for Guam',
         theme_color: '#14B8A6',
         background_color: '#ffffff',
         display: 'standalone',

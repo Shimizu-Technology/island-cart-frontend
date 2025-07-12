@@ -1,5 +1,5 @@
-// Island Cart PWA Service Worker
-const CACHE_NAME = 'island-cart-v1';
+// Guahan Grocer PWA Service Worker
+const CACHE_NAME = 'guahan-grocer-v1';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',
