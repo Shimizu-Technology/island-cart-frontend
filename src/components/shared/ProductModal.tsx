@@ -69,29 +69,93 @@ export const ProductModal: React.FC<ProductModalProps> = ({ item, isOpen, onClos
         </div>
 
         {/* Main Content - Responsive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 h-full">
-          {/* Left Column - Product Image & Actions */}
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 relative flex flex-col">
-            {/* Product Image */}
-            <div className="flex-1 flex items-center justify-center p-6 lg:p-8">
-              <div className="relative max-w-md w-full">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-48 lg:h-64 object-cover rounded-2xl shadow-lg"
-                />
-              </div>
+        <div className="flex flex-col lg:grid lg:grid-cols-[1fr_2fr] h-full">
+          {/* Left Column - Product Image (Mobile: Top, Desktop: Left) */}
+          <div className="relative bg-gradient-to-br from-ocean-teal-50 via-cyan-50 to-blue-50 flex items-center justify-center p-6 lg:p-8 overflow-hidden">
+            {/* Decorative Background Elements */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-ocean-teal-200 rounded-full blur-xl"></div>
+              <div className="absolute bottom-10 right-10 w-40 h-40 bg-cyan-200 rounded-full blur-xl"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-200 rounded-full blur-2xl"></div>
+            </div>
+            
+            {/* Decorative Pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23059669' fill-opacity='0.2'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                backgroundSize: '30px 30px'
+              }}></div>
             </div>
 
+            {/* Main Image Container */}
+            <div className="relative z-10 w-full max-w-sm lg:max-w-lg">
+              {/* Image Wrapper with Enhanced Styling */}
+              <div className="relative group">
+                {/* Image Background/Shadow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-white/60 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-ocean-teal-100/30 to-cyan-100/30 rounded-3xl transform -rotate-1 group-hover:-rotate-2 transition-transform duration-300"></div>
+                
+                {/* Main Image */}
+                <div className="relative bg-white rounded-3xl shadow-xl overflow-hidden transform group-hover:scale-105 transition-all duration-300">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-56 sm:h-64 lg:h-80 xl:h-96 object-cover"
+                  />
+                  
+                  {/* Image Overlay for Additional Info */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  {/* Stock Status Indicator */}
+                  <div className="absolute top-4 left-4">
+                    <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      item.inStock 
+                        ? 'bg-green-100 text-green-800 border border-green-200' 
+                        : 'bg-red-100 text-red-800 border border-red-200'
+                    }`}>
+                      {item.inStock ? 'In Stock' : 'Out of Stock'}
+                    </div>
+                  </div>
+                  
+                  {/* Category Tag */}
+                  <div className="absolute top-4 right-4">
+                    <div className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-gray-700 border border-gray-200">
+                      {item.category}
+                    </div>
+                  </div>
+                  
+                  {/* Price Badge for Mobile */}
+                  <div className="absolute bottom-4 right-4 lg:hidden">
+                    <div className="px-3 py-2 bg-gradient-to-r from-ocean-teal-500 to-cyan-500 text-white rounded-full font-bold text-sm shadow-lg">
+                      ${item.price.toFixed(2)}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Decorative Corner Elements */}
+                <div className="absolute -top-2 -left-2 w-8 h-8 bg-gradient-to-br from-ocean-teal-400 to-cyan-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-300"></div>
+              </div>
+              
+              {/* Product Quick Info Below Image */}
+              <div className="mt-6 text-center lg:hidden">
+                <h2 className="text-xl font-bold text-gray-900 mb-1">{item.name}</h2>
+                <p className="text-gray-600 text-sm">{item.brand} • {item.weight}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Product Info & Details */}
+          <div className="flex flex-col h-full min-h-0 bg-white">
             {/* Product Info & Actions */}
-            <div className="p-6 lg:p-8 bg-white/95 backdrop-blur-sm">
+            <div className="flex-shrink-0 p-6 lg:p-8 border-b border-gray-100">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">{item.name}</h1>
-                  <p className="text-gray-600 text-sm lg:text-base">{item.brand} • {item.origin}</p>
+                  <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{item.name}</h1>
+                  <p className="text-gray-600 text-base">{item.brand} • {item.origin}</p>
                   <p className="text-gray-500 text-sm">{item.weight}</p>
                 </div>
-                <div className="text-right ml-4">
+                <div className="text-right ml-6">
                   <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-ocean-teal-600 to-cyan-600 bg-clip-text text-transparent">
                     ${item.price.toFixed(2)}
                   </div>
@@ -148,12 +212,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({ item, isOpen, onClos
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Right Column - Product Details */}
-          <div className="flex flex-col h-full min-h-0">
             {/* Tabs */}
-            <div className="flex-shrink-0 p-6 lg:p-8 pb-0">
+            <div className="flex-shrink-0 px-6 lg:px-8 pt-6">
               <div className="flex space-x-1 bg-gray-100 rounded-2xl p-1">
                 {[
                   { id: 'overview', label: 'Overview', icon: Package },
