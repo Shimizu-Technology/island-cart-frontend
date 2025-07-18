@@ -1,14 +1,38 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Package, Settings, LogOut, Menu, X, Home } from 'lucide-react';
+import { ShoppingCart, Package, Settings, LogOut, Menu, X, Home, Heart } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
+import { useFavorites } from '../../context/FavoritesContext';
 
 export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const { itemCount } = useCart();
+  const { favoritesCount } = useFavorites();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  // Handle click outside to close mobile menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMobileMenuOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMobileMenuOpen]);
 
   const getNavLinks = () => {
     if (!user) return [];
@@ -18,6 +42,7 @@ export const Navbar: React.FC = () => {
         return [
           { to: '/', label: 'Home', icon: Home },
           { to: '/catalog', label: 'Catalog', icon: Package },
+          { to: '/favorites', label: 'Favorites', icon: Heart, badge: favoritesCount > 0 ? favoritesCount : undefined },
           { to: '/cart', label: 'Cart', icon: ShoppingCart, badge: itemCount > 0 ? itemCount : undefined },
         ];
       case 'driver':
@@ -129,7 +154,7 @@ export const Navbar: React.FC = () => {
         
         {/* Mobile Menu */}
         {user && isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white">
+          <div ref={mobileMenuRef} className="md:hidden border-t border-gray-200 bg-white">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navLinks.map((link) => {
                 const Icon = link.icon;

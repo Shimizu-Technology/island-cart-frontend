@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Plus, Minus, Heart, Award, MapPin, Package, Clock, Shield, Leaf } from 'lucide-react';
 import { Item } from '../../types';
 import { useCart } from '../../context/CartContext';
+import { useFavorites } from '../../context/FavoritesContext';
 
 interface ProductModalProps {
   item: Item;
@@ -11,12 +12,13 @@ interface ProductModalProps {
 
 export const ProductModal: React.FC<ProductModalProps> = ({ item, isOpen, onClose }) => {
   const { addItem, items, updateQuantity } = useCart();
-  const [isLiked, setIsLiked] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [isAdding, setIsAdding] = useState(false);
   const [activeTab, setActiveTab] = useState<'overview' | 'nutrition' | 'ingredients'>('overview');
 
   const cartItem = items.find(cartItem => cartItem.item.id === item.id);
   const quantity = cartItem?.quantity || 0;
+  const isLiked = isFavorite(item.id);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -126,7 +128,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ item, isOpen, onClos
               {/* Action Buttons */}
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => setIsLiked(!isLiked)}
+                  onClick={() => toggleFavorite(item)}
                   className={`p-2.5 rounded-xl transition-all duration-200 ${
                     isLiked 
                       ? 'text-white bg-gradient-to-r from-red-400 to-pink-500' 

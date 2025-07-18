@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Plus, Minus, Heart } from 'lucide-react';
 import { Item } from '../../types';
 import { useCart } from '../../context/CartContext';
+import { useFavorites } from '../../context/FavoritesContext';
 
 interface ItemCardProps {
   item: Item;
@@ -11,11 +12,12 @@ interface ItemCardProps {
 
 export const ItemCard: React.FC<ItemCardProps> = ({ item, viewMode = 'grid', onItemClick }) => {
   const { addItem, items, updateQuantity } = useCart();
-  const [isLiked, setIsLiked] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [isAdding, setIsAdding] = useState(false);
 
   const cartItem = items.find(cartItem => cartItem.item.id === item.id);
   const quantity = cartItem?.quantity || 0;
+  const isLiked = isFavorite(item.id);
 
   const handleAddItem = async (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent modal from opening
@@ -32,7 +34,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, viewMode = 'grid', onI
 
   const handleLikeClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent modal from opening
-    setIsLiked(!isLiked);
+    toggleFavorite(item);
   };
 
   const handleItemClick = () => {

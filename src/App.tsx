@@ -2,11 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { FavoritesProvider } from './context/FavoritesContext';
 import { ProtectedRoute } from './components/shared/ProtectedRoute';
 import { Navbar } from './components/shared/Navbar';
 import { LoginPage } from './pages/LoginPage';
 import { CustomerHome } from './pages/customer/CustomerHome';
 import { CatalogPage } from './pages/customer/CatalogPage';
+import { FavoritesPage } from './pages/customer/FavoritesPage';
 import { CartPage } from './pages/customer/CartPage';
 import { CheckoutPage } from './pages/customer/CheckoutPage';
 import { OrderTrackingPage } from './pages/customer/OrderTrackingPage';
@@ -19,29 +21,35 @@ function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <Router>
-          <div className="min-h-screen bg-gray-50">
-            <Navbar />
-            <main className="pt-16">
-              <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                
-                {/* Customer Routes */}
-                <Route path="/" element={
-                  <ProtectedRoute role="customer">
-                    <CustomerHome />
-                  </ProtectedRoute>
-                } />
-                <Route path="/catalog" element={
-                  <ProtectedRoute role="customer">
-                    <CatalogPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/cart" element={
-                  <ProtectedRoute role="customer">
-                    <CartPage />
-                  </ProtectedRoute>
-                } />
+        <FavoritesProvider>
+          <Router>
+            <div className="min-h-screen bg-gray-50">
+              <Navbar />
+              <main className="pt-16">
+                <Routes>
+                  <Route path="/login" element={<LoginPage />} />
+                  
+                  {/* Customer Routes */}
+                  <Route path="/" element={
+                    <ProtectedRoute role="customer">
+                      <CustomerHome />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/catalog" element={
+                    <ProtectedRoute role="customer">
+                      <CatalogPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/favorites" element={
+                    <ProtectedRoute role="customer">
+                      <FavoritesPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/cart" element={
+                    <ProtectedRoute role="customer">
+                      <CartPage />
+                    </ProtectedRoute>
+                  } />
                 <Route path="/checkout" element={
                   <ProtectedRoute role="customer">
                     <CheckoutPage />
@@ -83,6 +91,7 @@ function App() {
             </main>
           </div>
         </Router>
+        </FavoritesProvider>
       </CartProvider>
     </AuthProvider>
   );
